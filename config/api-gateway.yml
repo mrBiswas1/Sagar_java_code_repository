@@ -1,31 +1,25 @@
 spring:
   application:
     name: api-gateway
-
   cloud:
     gateway:
       discovery:
         locator:
           enabled: true
           lower-case-service-id: true
-
       routes:
-        # ORDER SERVICE
-        - id: order-service-route
-          uri: lb://order-service
-          predicates:
-            - Path=/api/placeOrder
-          filters:
-            - StripPrefix=1
-
-        # PAYMENT SERVICE
-        - id: payment-service-route
+        - id: payment-service
           uri: lb://payment-service
           predicates:
-            - Path=/api/makePayment
+            - Path=/api/makePayment/**
+          filters:
+            - StripPrefix=2
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/api/placeOrder/**
           filters:
             - StripPrefix=1
-
 eureka:
   client:
     service-url:
