@@ -11,13 +11,13 @@ spring:
         - id: payment-service
           uri: lb://payment-service
           predicates:
-            - Path=/api/makePayment/**
+            - Path=/api/makePayment
           filters:
             - StripPrefix=2
         - id: order-service
           uri: lb://order-service
           predicates:
-            - Path=/api/placeOrder/**
+            - Path=/api/placeOrder
           filters:
             - StripPrefix=1
 eureka:
